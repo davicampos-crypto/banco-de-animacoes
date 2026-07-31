@@ -1,0 +1,5 @@
+.DS_Store
+Thumbs.db
+.playwright-mcp/
+*.jpeg
+node_modules/

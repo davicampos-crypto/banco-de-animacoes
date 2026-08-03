@@ -1,26 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Banco de Animações · Impero Solutions</title>
-<meta name="description" content="205 animações web executáveis, com o código real que está rodando em cada preview. Sem bibliotecas.">
+<title>Banco de Animações · GSAP (suíte) · Impero Solutions</title>
+<meta name="description" content="Suíte de 104 animações reimplementadas com GSAP — página para teste de performance.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0c'/%3E%3Crect x='2.5' y='2.5' width='27' height='27' rx='4.5' fill='none' stroke='%23d4af37' stroke-opacity='.45'/%3E%3Ctext x='16' y='22' font-size='17' text-anchor='middle' fill='%23d4af37'%3E%E2%99%9B%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-engine="index">
+<body data-engine="gsap">
 
 <header class="masthead">
   <div class="wrap">
     <p class="crest"><span class="mark">♛</span> Impero <b>Solutions</b></p>
-    <nav class="guias">
-      <a href="index.html" class="is-on">Banco de Animações</a>
-      <a href="efeitos.html">Efeitos Avançados</a>
-    </nav>
-    <h1 class="ttl"><span><i>Banco de Animações</i></span></h1>
+    <h1 class="ttl"><span><i>Banco de Animações — GSAP</i></span></h1>
     <p class="lede">
-      Tudo que dá para animar na web com HTML, CSS e JavaScript puro — cada exemplo rodando
-      de verdade, ao lado do código exato que o faz rodar. Passe o mouse, role, clique, copie.
+      As mesmas 104 animações da suíte de referência, com o JavaScript reescrito em GSAP. Compare a performance entre as páginas.
     </p>
     <p class="totals" id="totals"></p>
   </div>
@@ -50,39 +45,19 @@
 
 <footer class="foot">
   <div class="wrap">
-    <p><span class="mark sm">♛</span> Impero Solutions — banco de animações construído com Claude Code.</p>
-    <p class="fine">Sem frameworks, sem bibliotecas de animação, sem CDN. Tipografia do sistema.</p>
+    <p><span class="mark sm">♛</span> Impero Solutions — suíte GSAP para benchmark.</p>
+    <p class="fine">Animações executadas pelo GSAP 3 (via CDN). Tipografia do sistema.</p>
   </div>
 </footer>
 
 <div class="toast" id="toast">Copiado</div>
 
-<script src="js/data/entrada.js"></script>
-<script src="js/data/scroll.js"></script>
-<script src="js/data/hover.js"></script>
-<script src="js/data/texto.js"></script>
-<script src="js/data/loaders.js"></script>
-<script src="js/data/nav.js"></script>
-<script src="js/data/fundos.js"></script>
-<script src="js/data/estado.js"></script>
-<script src="js/data/dados.js"></script>
-<script src="js/data/avancado.js"></script>
-
-<script src="js/data/entrada2.js"></script>
-<script src="js/data/scroll2.js"></script>
-<script src="js/data/hover2.js"></script>
-<script src="js/data/texto2.js"></script>
-<script src="js/data/loaders2.js"></script>
-<script src="js/data/nav2.js"></script>
-<script src="js/data/fundos2.js"></script>
-<script src="js/data/estado2.js"></script>
-<script src="js/data/dados2.js"></script>
-<script src="js/data/avancado2.js"></script>
-
-<script src="js/data/nichos-demos.js"></script>
-<script src="js/nichos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="js/engines/gsap-a.js"></script>
+<script src="js/engines/gsap-b.js"></script>
 
 <script src="js/engine-switch.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
+

@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    Banco de Animações · Impero Solutions
    Tokens portados do Banco de Skills: o tema claro não é a
    inversão do escuro — é papel quente, com o mesmo ouro
@@ -277,3 +277,44 @@ main.wrap{padding-bottom:56px}
   .tools{flex-wrap:wrap}
   .result{order:3}
 }
+
+/* ---------- seletor de tecnologia (engine-switch.js) ---------- */
+.engine-pick{display:flex;align-items:center;gap:8px;padding:0 12px;height:38px;
+  border:1px solid var(--line-strong);border-radius:10px;background:var(--raised);
+  color:var(--muted);cursor:pointer}
+.engine-pick__ico{font-size:14px;opacity:.7}
+.engine-pick select{appearance:none;-webkit-appearance:none;background:none;border:0;
+  color:inherit;font:inherit;font-size:12.5px;cursor:pointer;outline:none;padding-right:2px}
+.engine-pick select option{background:var(--raised);color:var(--text)}
+
+/* ---------- curadoria por nicho ---------- */
+.chips--nichos{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.nicho-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--subtle);align-self:center;margin-right:2px}
+.chip--nicho{border-style:dashed}
+.chip--nicho.is-on{border-style:solid;border-color:var(--accent);color:var(--accent)}
+.chip--nicho.is-on b{color:inherit}
+.card__why{margin-top:7px;padding:7px 10px;border-left:2px solid var(--accent);
+  background:var(--accent-wash);
+  border-radius:0 8px 8px 0;font-size:12px;line-height:1.5;color:var(--muted)}
+.card__why[hidden]{display:none}
+
+
+
+/* ---------- navegação entre guias ---------- */
+.guias{display:flex;gap:4px;margin:14px 0 6px}
+.guias a{padding:7px 14px;border-radius:999px;font-size:12.5px;text-decoration:none;
+  color:var(--muted);border:1px solid transparent;transition:color .2s,border-color .2s}
+.guias a:hover{color:var(--text)}
+.guias a.is-on{color:var(--accent);border-color:var(--accent-edge);background:var(--accent-wash)}
+
+/* ---------- bloco de referências nos cards de efeitos ---------- */
+.fx-refs{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);
+  display:flex;flex-wrap:wrap;gap:6px 10px;font-size:11.5px}
+.fx-refs a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-edge)}
+.fx-refs a:hover{border-bottom-style:solid}
+.fx-refs .fx-refs__label{color:var(--subtle);font-family:var(--mono);font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;width:100%}
+
+/* fallbacks de demos usam [hidden] + display próprio; o atributo deve vencer */
+.demo-host [hidden]{display:none!important}

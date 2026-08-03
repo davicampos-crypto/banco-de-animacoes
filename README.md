@@ -124,3 +124,97 @@ snapshots defasados e um "saiu da tela" atrasado deixava cards vazios. O observe
 2. Copie o objeto de uma demo parecida, troque o `id` por um prefixo novo.
 3. Renomeie **todas** as classes CSS para esse prefixo.
 4. Salve e recarregue — a contagem e os filtros se ajustam sozinhos.
+
+---
+
+## Páginas por tecnologia (benchmark)
+
+Além do `index.html` (site completo, 205 animações em vanilla), existem quatro páginas
+com a **mesma suíte de 104 animações** (leva 1, todas as 10 categorias), cada uma
+executada por uma tecnologia diferente — troque pelo seletor ⚙ na toolbar:
+
+| Página         | Tecnologia                     | Origem do código de animação          |
+|----------------|--------------------------------|---------------------------------------|
+| `vanilla.html` | HTML/CSS/JS puro (referência)  | `js/data/*.js` (arquivos da leva 1)   |
+| `gsap.html`    | GSAP 3 (CDN)                   | `js/engines/gsap-a.js` / `gsap-b.js`  |
+| `anime.html`   | Anime.js 3 (CDN)               | `js/engines/anime-a.js` / `anime-b.js`|
+| `waapi.html`   | Web Animations API (nativa)    | `js/engines/waapi-a.js` / `waapi-b.js`|
+| `react.html`   | React 18 (CDN) — shell em componentes | `js/apps/react-app.js` + `js/data/*`  |
+| `vue.html`     | Vue 3 (CDN) — shell em componentes    | `js/apps/vue-app.js` + `js/data/*`    |
+| `svelte.html`  | Svelte (compilado) — shell em componentes | `js/apps/svelte-app.js` (fonte em `svelte-src/`, `npm run build`) |
+| `tailwind.html`| Tailwind CSS (Play CDN) — estilo utilitário | `js/engines/tw-a.js` / `tw-b.js`  |
+
+Nas páginas de framework (React/Vue/Svelte), o shell — cards, filtros, busca e o
+mount/desmount por scroll — é renderizado pelo framework e cada demo vive num
+componente com teardown; o código de animação dos demos é o vanilla original
+(é o overhead do framework que entra no teste). Na página Tailwind, o JS é o
+vanilla original e o que muda é o CSS, reescrito em classes utilitárias.
+
+O HTML e o CSS estático de cada demo são idênticos entre as páginas; só o driver de
+movimento muda. Isso torna a comparação de performance justa (mesmo DOM, mesmo paint).
+
+### Como medir
+
+1. Sirva a pasta (`npx serve .` ou similar) — as páginas GSAP/Anime precisam de internet (CDN).
+2. Abra cada página em janela anônima, DevTools → Performance, grave ~20 s rolando a página inteira.
+3. Compare: FPS médio, tempo de scripting, long tasks e memória (os cards montam/desmontam ao rolar, então a rolagem é o cenário de estresse).
+4. Lighthouse/PageSpeed também funcionam, mas o Performance panel captura melhor o custo de runtime das animações.
+
+---
+
+## Curadoria por nicho
+
+O `index.html` tem uma segunda régua de filtros — **Nichos** — que enxerga o banco pela ótica
+comercial: "vou montar um site para um cliente do segmento X; quais animações oferecer?".
+Ao ativar um nicho, só as animações curadas aparecem e cada card mostra uma nota ♛ com o
+**porquê** daquela animação funcionar naquele segmento (onde entra no site e o efeito no visitante).
+
+| Nicho | Onde está | Inclui |
+|---|---|---|
+| Construção & Arquitetura | `js/nichos.js` | reveals estruturais, contadores de obra, SVG de traço, before/after, timeline de obra, blueprint |
+| E-commerce | `js/nichos.js` | filtros/organização de catálogo (FLIP, tabs, busca) + micro-interações de compra (fly-to-cart, stepper, toasts, skeletons) |
+| Chalés & Hospedagem | `js/nichos.js` | atmosfera: parallax de paisagem, partículas suaves, ken burns, reserva com confirmação |
+| Clínicas de alto padrão | `js/nichos.js` | elegância clínica: fades/blur-in, credibilidade em números, agendamento com micro-feedback, before/after |
+
+- O mapeamento das 205 animações originais vive em `js/nichos.js` (id → porquê, por nicho).
+- 8 demos novas essenciais aos nichos estão em `js/data/nichos-demos.js` (ids `ni01–ni08`,
+  busque "nicho"): filtro FLIP, fly-to-cart, stepper de checkout, antes/depois, blueprint,
+  timeline de obra, ken burns e reserva — elas carregam o próprio mapeamento inline (campo `nichos`).
+- Um item pode servir a mais de um nicho, com porquês diferentes.
+- As páginas de benchmark (suíte de 104) não carregam a camada de nichos — seguem idênticas
+  entre si para o teste de performance continuar justo.
+
+---
+
+## Guia "Efeitos Avançados" (`efeitos.html`)
+
+Segunda guia do site (navegação no topo): mapeamento técnico de **animação 3D integrada a
+imagens**, 16 técnicas em 7 famílias, com a mesma engine de cards/busca/filtros do banco.
+Cada card traz o nome técnico, as skills nas tags, um demo executável em vanilla (WebGL cru,
+CSS 3D ou canvas — texturas procedurais, sem imagens externas) e as referências do gênero
+linkadas no rodapé do card.
+
+| Família | Técnicas |
+|---|---|
+| 2.5D / Depth map | parallax por depth map, displacement de vértices, scanning reveal |
+| Walkthrough no scroll | sequência de frames scrubbed, câmera 3D no scroll, colagem cinemática |
+| WebGL sobre imagens | distortion hover, gooey reveal, warp transitions, velocity skew |
+| CSS puro / leve | tilt 3D em camadas, flip + holográfico |
+| Orquestração de scroll | zoom-into-image (portal), parallax multicamada + smooth scroll |
+| Gaussian Splatting | nuvem de pontos navegável (referências SuperSplat/Spark) |
+| Câmera por IA | dolly zoom (Vertigo) + presets orbit/crane (referências Higgsfield/Immersity) |
+
+Dados em `js/data/efeitos-a.js` (WebGL) e `efeitos-b.js` (scroll/CSS/canvas); as categorias
+da guia são definidas em `window.ANIMCATS` no próprio `efeitos.html` (o `js/main.js` usa
+`ANIMCATS` quando existe). Demos WebGL degradam para fallback estático sem WebGL.
+
+### Gravações das referências (`referencias/`)
+
+Vídeos `.webm` (1280×720, ~20–40 s) gravados com navegador automatizado direto nos demos
+originais — mouse varrendo nos efeitos de hover, rolagem cinematográfica nos scroll-driven.
+Cada card da guia Efeitos Avançados linka sua gravação ("🎬 gravação do demo"):
+
+fake3d-depth-map · distortion-hover · gooey-hover · awwwards-manet · gsap-scrolltrigger ·
+lenis-smooth-scroll · supersplat-gallery · higgsfield-camera · immersity-ai-25d
+
+Uso interno (estudo/referência) — o crédito e o link da fonte original permanecem em cada card.

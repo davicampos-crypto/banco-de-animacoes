@@ -1,0 +1,13 @@
+{
+  "name": "animdb-svelte",
+  "private": true,
+  "description": "Fonte do app Svelte do banco de animações. `npm run build` gera ../js/apps/svelte-app.js (o bundle é commitado; o site continua estático).",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "esbuild-svelte": "^0.8.2",
+    "svelte": "^4.2.19"
+  }
+}

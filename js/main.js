@@ -8,7 +8,20 @@
 
   var DB = window.ANIMDB || [];
 
-  var CATS = [
+  /* nichos: js/nichos.js mapeia id -> porquê; itens novos podem trazer
+     o mapeamento inline em item.nichos — funde tudo num lugar só. */
+  var NICHOS = window.NICHOS || null;
+  if (NICHOS) {
+    DB.forEach(function (i) {
+      if (!i.nichos) return;
+      Object.keys(i.nichos).forEach(function (k) {
+        if (NICHOS[k]) NICHOS[k].itens[i.id] = i.nichos[k];
+      });
+    });
+  }
+
+  /* a página pode definir suas próprias categorias (ex.: efeitos.html) */
+  var CATS = window.ANIMCATS || [
     { id: 'entrada',  nome: 'Entrada / Reveal',      desc: 'Elementos aparecendo ao entrar na viewport.' },
     { id: 'scroll',   nome: 'Scroll-driven',         desc: 'Movimento amarrado à posição da rolagem.' },
     { id: 'hover',    nome: 'Hover & micro',         desc: 'Resposta imediata ao cursor e ao clique.' },
@@ -182,7 +195,8 @@
         '<span class="card__num">' + String(n).padStart(3, '0') + '</span>' +
         (item.nv ? '<span class="card__new">novo</span>' : '') +
         '<div><h3 class="card__ttl">' + esc(item.title) + '</h3>' +
-        (item.desc ? '<p class="card__desc">' + esc(item.desc) + '</p>' : '') + '</div>' +
+        (item.desc ? '<p class="card__desc">' + esc(item.desc) + '</p>' : '') +
+        '<p class="card__why" hidden></p></div>' +
       '</div>' +
       '<div class="' + stageCls + '">' + (item.hint ? '<span class="stage__hint">' + esc(item.hint) + '</span>' : '') + '</div>' +
       '<div class="card__bar">' +
@@ -315,6 +329,30 @@
       chips.scrollLeft += e.deltaY;
     }, { passive: false });
 
+    /* régua de nichos: curadoria comercial — filtra o banco pelo segmento
+       do cliente e mostra em cada card o porquê da indicação. */
+    if (NICHOS) {
+      var nrow = document.createElement('div');
+      nrow.className = 'chips chips--nichos';
+      nrow.id = 'nichos';
+      nrow.innerHTML = '<span class="nicho-label">Nichos</span>' +
+        Object.keys(NICHOS).map(function (k) {
+          var qn = Object.keys(NICHOS[k].itens).length;
+          return '<button class="chip chip--nicho" data-nicho="' + k + '" title="' +
+                 esc(NICHOS[k].desc || '') + '">' + esc(NICHOS[k].nome) + ' <b>' + qn + '</b></button>';
+        }).join('');
+      chips.parentNode.appendChild(nrow);
+      nrow.addEventListener('click', function (e) {
+        var b = e.target.closest('.chip--nicho'); if (!b) return;
+        var k = b.dataset.nicho;
+        state.nicho = (state.nicho === k) ? '' : k;   // clicar de novo desliga
+        nrow.querySelectorAll('.chip--nicho').forEach(function (x) {
+          x.classList.toggle('is-on', x.dataset.nicho === state.nicho);
+        });
+        applyFilter();
+      });
+    }
+
     $('#totals').innerHTML =
       '<span><b data-count="' + DB.length + '">0</b>animações executáveis</span>' +
       '<span><b data-count="' + CATS.length + '">0</b>categorias</span>' +
@@ -323,15 +361,22 @@
   }
 
   /* ---------- filtro ---------- */
-  var state = { cat: 'all', q: '' };
+  var state = { cat: 'all', q: '', nicho: '' };
 
   function applyFilter() {
     var vis = 0;
+    var nm = state.nicho && NICHOS ? NICHOS[state.nicho] : null;
     allCards.forEach(function (c) {
       var okCat = state.cat === 'all' ||
                   (state.cat === '__nv' ? c.dataset.nv === '1' : c.dataset.cat === state.cat);
       var okQ = !state.q || c.dataset.q.indexOf(state.q) > -1;
-      var on = okCat && okQ;
+      var okN = !nm || !!nm.itens[c._item.id];
+      var on = okCat && okQ && okN;
+      var why = $('.card__why', c);
+      if (why) {
+        if (on && nm) { why.textContent = '♛ ' + nm.itens[c._item.id]; why.hidden = false; }
+        else { why.hidden = true; }
+      }
       c.style.display = on ? '' : 'none';
       if (on) vis++; else unmount(c);
     });

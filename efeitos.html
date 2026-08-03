@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Efeitos Avançados · Animação 3D sobre imagens · Impero Solutions</title>
+<meta name="description" content="Referências e demos das técnicas de animação 3D integrada a imagens: depth map, walkthrough por scroll, WebGL hover, CSS 3D, gaussian splatting e câmera por IA.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0c'/%3E%3Crect x='2.5' y='2.5' width='27' height='27' rx='4.5' fill='none' stroke='%23d4af37' stroke-opacity='.45'/%3E%3Ctext x='16' y='22' font-size='17' text-anchor='middle' fill='%23d4af37'%3E%E2%99%9B%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-engine="efeitos">
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="crest"><span class="mark">♛</span> Impero <b>Solutions</b></p>
+    <nav class="guias">
+      <a href="index.html">Banco de Animações</a>
+      <a href="efeitos.html" class="is-on">Efeitos Avançados</a>
+    </nav>
+    <h1 class="ttl"><span><i>Efeitos Avançados</i></span></h1>
+    <p class="lede">
+      Animação 3D integrada a imagens: as técnicas agrupadas por família, cada uma com o
+      nome técnico, as skills envolvidas, um demo executável e as melhores referências do gênero.
+    </p>
+    <p class="totals" id="totals"></p>
+  </div>
+</header>
+
+<div class="toolbar" id="toolbar">
+  <div class="wrap">
+    <div class="tools">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="search" placeholder="buscar: depth map, shader, dolly, splat…" autocomplete="off">
+        <kbd>/</kbd>
+      </label>
+      <span class="result" id="result"></span>
+      <button class="icon-btn" id="tgTheme" title="Alternar tema" aria-label="Alternar tema">
+        <span class="ico-sun">☀</span><span class="ico-moon">☾</span>
+      </button>
+      <button class="icon-btn" id="tgReduce" title="Pausar animações" aria-label="Pausar animações">
+        <span class="ico-pause">⏸</span><span class="ico-play">▶</span>
+      </button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+</div>
+
+<main class="wrap" id="grid"></main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><span class="mark sm">♛</span> Impero Solutions — mapeamento técnico de efeitos 3D sobre imagens.</p>
+    <p class="fine">Demos em vanilla (WebGL cru, CSS 3D, canvas). Referências linkadas em cada card.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Copiado</div>
+
+<script>
+/* categorias próprias desta guia — o main.js usa window.ANIMCATS se existir */
+window.ANIMCATS = [
+  { id: 'depth',     nome: '2.5D / Depth map',          desc: 'Profundidade falsa a partir de imagem 2D: o depth map desloca UVs e vértices.' },
+  { id: 'walk',      nome: 'Walkthrough no scroll',      desc: 'Câmera voando pela cena, scrubbed pela rolagem — frames, mundo 3D ou painéis.' },
+  { id: 'hoverfx',   nome: 'WebGL sobre imagens',        desc: 'Distorção, gooey, warp e velocity — shaders reagindo a hover e scroll.' },
+  { id: 'css3d',     nome: 'CSS puro / leve',            desc: 'Tilt em camadas, flip e holográfico — sem WebGL, roda em qualquer lugar.' },
+  { id: 'orquestra', nome: 'Orquestração de scroll',     desc: 'Pin, zoom-into-image, parallax multicamada e smooth scroll cinematográfico.' },
+  { id: 'splat',     nome: 'Gaussian Splatting',         desc: 'Fotos viram cena 3D navegável no browser — o estado da arte 2026.' },
+  { id: 'ia',        nome: 'Câmera por IA',              desc: 'A IA "filma" a foto: dolly, orbit, crane e 2.5D automático.' }
+];
+</script>
+<script src="js/data/efeitos-a.js"></script>
+<script src="js/data/efeitos-b.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
